@@ -17,6 +17,27 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
+# For authentication
+gem 'devise'
+
+# Validations for Active Storage
+gem 'active_storage_validations'
+
+# Use HAML instead of ERB
+gem 'haml-rails'
+
+# Efficient pagination
+gem 'pagy'
+
+# Consume the currency exchange API
+gem 'httparty'
+
+# Styling with Tailwind CSS
+gem 'tailwindcss-rails'
+
+# For testing with RSpec
+gem 'rspec-rails', group: [:development, :test]
+
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"
