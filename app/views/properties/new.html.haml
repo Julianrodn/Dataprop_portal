@@ -1,0 +1,52 @@
+%section.container.mx-auto.mt-8
+  %h1.text-3xl.font-bold.text-center.mb-6 Nueva Propiedad
+
+  - if @property.errors.any?
+    %div.bg-red-100.text-red-700.border-l-4.border-red-500.p-4.mb-6
+      %h2.font-semibold.text-lg.text-red-800 Errores al guardar la propiedad:
+      %ul.list-disc.pl-6
+        - @property.errors.full_messages.each do |error|
+          %li= error
+
+  = form_with model: @property, local: true, html: { class: 'space-y-6' } do |form|
+    %div
+      = form.label :type, "Tipo de propiedad", class: "block text-sm font-medium text-gray-700"
+      = form.select :type, [["Arriendo", "Arriendo"], ["Venta", "Venta"]], {}, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :price, "Precio (ej: 1000000)", class: "block text-sm font-medium text-gray-700"
+      = form.number_field :price, step: 0.01, min: 0, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :currency, "Moneda", class: "block text-sm font-medium text-gray-700"
+      = form.select :currency, [["CLP", "CLP"], ["USD", "USD"]], {}, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :comuna, "Comuna", class: "block text-sm font-medium text-gray-700"
+      = form.text_field :comuna, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :address, "Dirección (Calle + Número)", class: "block text-sm font-medium text-gray-700"
+      = form.text_field :address, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :area, "Área (m²)", class: "block text-sm font-medium text-gray-700"
+      = form.number_field :area, min: 1, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :bedrooms, "Número de habitaciones", class: "block text-sm font-medium text-gray-700"
+      = form.number_field :bedrooms, min: 0, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :bathrooms, "Número de baños", class: "block text-sm font-medium text-gray-700"
+      = form.number_field :bathrooms, min: 0, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :latitude, "Latitud", class: "block text-sm font-medium text-gray-700"
+      = form.text_field :latitude, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :longitude, "Longitud", class: "block text-sm font-medium text-gray-700"
+      = form.text_field :longitude, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :description, "Descripción", class: "block text-sm font-medium text-gray-700"
+      = form.text_area :description, rows: 4, class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    %div
+      = form.label :photos, "Fotos (puedes subir varias)", class: "block text-sm font-medium text-gray-700"
+      = form.file_field :photos, multiple: true, accept: "image/*", class: "block w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+
+    %div
+      = form.submit "Guardar Propiedad", class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+
+  = link_to "Volver al listado", properties_path, class: "block mt-6 text-blue-500 hover:underline text-center"
