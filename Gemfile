@@ -17,6 +17,10 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
+gem 'mapkick-rb'
+
+gem 'importmap-rails'
+
 # For authentication
 gem 'devise'
 
@@ -27,7 +31,7 @@ gem 'active_storage_validations'
 gem 'haml-rails'
 
 # Efficient pagination
-gem 'pagy'
+gem 'kaminari'
 
 # Consume the currency exchange API
 gem 'httparty'
