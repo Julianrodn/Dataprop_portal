@@ -5,7 +5,7 @@ class Property < ApplicationRecord
   belongs_to :user
   has_many_attached :photos
 
-  validates :price, numericality: { greater_than: 0 }
+  validates :price, presence: true, numericality: { greater_than: 0 }
   validates :photos, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg'], on: :create
 
   validates :comuna, :address, :latitude, :longitude, presence: true
