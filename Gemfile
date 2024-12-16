@@ -39,9 +39,6 @@ gem 'httparty'
 # Styling with Tailwind CSS
 gem 'tailwindcss-rails'
 
-# For testing with RSpec
-gem 'rspec-rails', group: [:development, :test]
-
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"
@@ -76,7 +73,8 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'faker'
 end
