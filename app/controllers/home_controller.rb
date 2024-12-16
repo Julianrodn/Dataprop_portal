@@ -8,6 +8,6 @@ class HomeController < ApplicationController
     @properties = @properties.where('bedrooms >= ?', params[:min_bedrooms]) if params[:min_bedrooms].present?
     @properties = @properties.where('bathrooms >= ?', params[:min_bathrooms]) if params[:min_bathrooms].present?
 
-    @properties = @properties.order(created_at: :desc).page(params[:page]).per(2)
+    @properties = @properties.order(created_at: :desc).page(params[:page]).per(3)
   end
 end

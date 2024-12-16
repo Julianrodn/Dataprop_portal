@@ -1,17 +1,27 @@
 class PropertiesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def index
-    @properties = Property.where(user_id: current_user.id).order(created_at: :desc).page(params[:page]).per(1)
+    @properties = Property.where(user_id: current_user.id).order(created_at: :desc).page(params[:page]).per(3)
   end
 
   def show
+    @property = Property.find(params[:id])
+
     response = HTTParty.get("https://mindicador.cl/api")
     if response.success?
-      exchange_rate = response.parsed_response["dolar"]["valor"].to_f
-      @converted_price = @property.currency == "CLP" ? (@property.price / exchange_rate).round(2) : (@property.price * exchange_rate).round(2)
+      data = response.parsed_response
+      exchange_rate = data["dolar"]["valor"].to_f
+
+      @converted_price = if @property.currency == "CLP"
+                           (@property.price / exchange_rate).round(2)
+                         else
+                           (@property.price * exchange_rate).round(2)
+                         end
+    else
+      @converted_price = nil
     end
   end
 
@@ -25,29 +35,29 @@ class PropertiesController < ApplicationController
     if @property.save
       redirect_to @property, notice: 'Propiedad creada exitosamente.'
     else
-      @comunas = Comuna.all # Asegurar que las comunas estén disponibles en caso de error
+      @comunas = Comuna.all
       render :new
     end
   end
 
   def edit
-    @comunas = Comuna.all # Cargar todas las comunas
-  end
-
-def update
-  if params[:property][:photos].present?
-    @property.photos.attach(params[:property][:photos])
-  else
-    @property.photos = @property.photos # Esto mantiene las fotos anteriores
-  end
-
-  if @property.update(property_params)
-    redirect_to @property, notice: 'Propiedad actualizada exitosamente.'
-  else
     @comunas = Comuna.all
-    render :edit
   end
-end
+
+  def update
+    if params[:property][:photos].present?
+      @property.photos.attach(params[:property][:photos])
+    else
+      @property.photos = @property.photos
+
+    end
+    if @property.update(property_params)
+      redirect_to @property, notice: 'Propiedad actualizada exitosamente.'
+    else
+      @comunas = Comuna.all
+      render :edit
+    end
+  end
 
   def destroy
     if @property.destroy
@@ -56,10 +66,6 @@ end
       flash[:alert] = "No se pudo eliminar la propiedad."
     end
     redirect_to properties_path
-  end
-
-  def search
-    # Implementar lógica de búsqueda
   end
 
   private
