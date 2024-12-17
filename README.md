@@ -27,7 +27,7 @@ Dataprop Portal is a web application developed in Ruby on Rails for property man
 
 Clone this repository to your local machine:
 ```bash
-git clone https://github.com/your-username/dataprop-portal.git
+git clone https://github.com/Julianrodn/dataprop-portal.git
 
 ```
 
